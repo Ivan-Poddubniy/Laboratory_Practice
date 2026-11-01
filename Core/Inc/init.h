@@ -1,7 +1,7 @@
 #define RCC         0x4002 3800UL
 #define AHB1ENR     0x30UL
 #define GPIO_B      0x4002 0400UL
-#define GPIO_A      0x4002 1000UL
+#define GPIO_E      0x4002 1000UL
 #define MODER       0x00UL
 #define OTYPER      0x04UL
 #define OSPEEDR     0x08UL
@@ -30,7 +30,11 @@
 #define RCC_GPIO_B_EN   0x01UL
 #define RCC_GPIO_E_EN   0x04UL
 
-#define BIT_SET(REG,VAL) ((REG)|=(VAL))
-#define BIT_READ(REG,VAL) ((REG)&(VAL))
+#define IDR_B12         0x1000UL
+#define IDR_B13         0x2000UL
+#define IDR_B15         0x8000UL
+
+#define BIT_SET(REG,VAL) (*(uint32_t*)(REG)|=(VAL))
+#define BIT_READ(REG,VAL) (*(uint32_t*)(REG)&(VAL))
 
 void GPIO_init(void);
