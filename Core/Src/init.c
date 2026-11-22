@@ -1,17 +1,20 @@
 #include "init.h"
 
 void GPIO_init(){
-    BIT_SET(RCC+AHB1ENR,RCC_GPIO_A_EN+RCC_GPIO_C_EN+RCC_GPIO_F_EN);
-    BIT_SET(GPIO_A+MODER,0x00000040UL);
-    BIT_SET(GPIO_C+MODER,0x00000041UL);
-    BIT_SET(GPIO_F+MODER,0x00100440UL);
-    BIT_SET(GPIO_A+OTYPER,0x00UL);
-    BIT_SET(GPIO_C+OTYPER,0x00UL);
-    BIT_SET(GPIO_F+OTYPER,0x00UL);
-    BIT_SET(GPIO_A+OSPEEDR,0x00000040UL);
-    BIT_SET(GPIO_C+OSPEEDR,0x00000041UL);
-    BIT_SET(GPIO_F+OSPEEDR,0x00100440UL);
-    BIT_SET(GPIO_A+PUPDR,0x00UL);
-    BIT_SET(GPIO_C+PUPDR,0x00UL);
-    BIT_SET(GPIO_F+PUPDR,0x00UL);
+    *(uint32_t*)(0x40023830UL)|=0x25UL; // Активируем тактирование портов A, C, F по RCC AHB1ENR
+    // Настраиваем  GPIO_A
+    *(uint32_t*)(0x40020000UL)|=0x00000040UL;   //Режим General Purpose Output для 3го пина
+    *(uint32_t*)(0x40020004UL)|=0x00UL;         //Режим вывода Push-Pull
+    *(uint32_t*)(0x40020008UL)|=0x00000040UL;   //Режим скорости работы 3го пина: middle
+    *(uint32_t*)(0x4002000CUL)|=0x00UL;         //Оставляем пины без подтяжки и стяжки к общему питанию
+    // Настраиваем  GPIO_C
+    *(uint32_t*)(0x40020800UL)|=0x00000041UL;   //Режим General Purpose Output для 0, 3 пинов
+    *(uint32_t*)(0x40020804UL)|=0x00UL;         //Режим вывода Push-Pull
+    *(uint32_t*)(0x40020808UL)|=0x00000041UL;   //Режим скорости работы 0, 3 пинов: middle
+    *(uint32_t*)(0x4002080CUL)|=0x00UL;         //Оставляем пины без подтяжки и стяжки к общему питанию
+    // Настраиваем  GPIO_F
+    *(uint32_t*)(0x40021400UL)|=0x00100440UL;   //Режим General Purpose Output для 3, 5, 10 пинов
+    *(uint32_t*)(0x40021404UL)|=0x00UL;         //Режим вывода Push-Pull
+    *(uint32_t*)(0x40021408UL)|=0x00100440UL;   //Режим скорости работы 3, 5, 10 пинов: middle
+    *(uint32_t*)(0x4002140CUL)|=0x00UL;         //Оставляем пины без подтяжки и стяжки к общему питанию
 }
