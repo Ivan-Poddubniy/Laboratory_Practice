@@ -27,15 +27,15 @@ int main(void){
     while(1){
         uint8_t light_up_mode=0;    // режим: включаем (1)/выключаем (2) диоды или ничего не делаем (0)
 
-        if(BIT_READ(GPIOA->IDR,BUT3)){
+        if(BIT_READ(GPIOA->IDR,BUT3)){          //Проверка сигнала на GPIO_A IDR 7 - Меняет местами функционал кнопок 1 и 2
             if(is_reverse) is_reverse=0;
             else is_reverse=1;
         }
-        else if(BIT_READ(GPIOA->IDR,BUT1)){
+        else if(BIT_READ(GPIOA->IDR,BUT1)){     //Проверка сигнала на GPIO_A IDR 5 - Включает светодиоды поочередно
             if(is_reverse) light_up_mode=2;
             else light_up_mode=1;
         }
-        else if(BIT_READ(GPIOA->IDR,BUT2)){
+        else if(BIT_READ(GPIOA->IDR,BUT2)){     //Проверка сигнала на GPIO_A IDR 6 - Выключает светодиоды в обратном порядке
             if(is_reverse) light_up_mode=1;
             else light_up_mode=2;
         }
